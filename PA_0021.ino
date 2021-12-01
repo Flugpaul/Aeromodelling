@@ -10,6 +10,11 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 #include <utility/imumaths.h>
+#include <LiquidCrystal_I2C.h>
+
+// Set the LCD address to 0x27 for a 16 chars and 2 line display
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
 
 //#include <Servo.h> // use of the PWM-library
 #include <Adafruit_TiCoServo.h> 
@@ -76,8 +81,15 @@ float PID_Kd = 0;
 int PID_potiPin = A1; 
 
 void setup() {
-  /* Initialise serial Com Board*/
-  Serial.begin(115200);
+  // initialize the LCD
+  lcd.begin();
+
+  // Turn on the blacklight and print a message.
+  lcd.backlight();
+  lcd.print("F1E-Sensor-program");
+ 
+ /* Initialise serial Com Board*/
+ Serial.begin(115200);
   while (!Serial) yield();
 
   /* Initialise the internal LED for calibration Status servo */
